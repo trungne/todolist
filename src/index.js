@@ -1,0 +1,6 @@
+initializeHtmlTags = function(){
+    
+}
+
+
+initializeHtmlTags();
