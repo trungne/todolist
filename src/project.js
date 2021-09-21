@@ -57,7 +57,9 @@ const addBtnHandler = function(event){
     
     // check empty input
     if (!textField.value){
-        container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
+        if (!container.querySelector(".alert-warning")){
+            container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
+        }
         return;
     }
 
@@ -75,14 +77,10 @@ const createWarning = function(message){
     closeBtn.setAttribute("type", "button");
     closeBtn.setAttribute("data-dismiss", "alert");
     closeBtn.setAttribute("aria-label", "Close");
-    closeBtn.classList.add("close");
+    closeBtn.setAttribute("data-bs-dismiss", "alert");
+    closeBtn.classList.add("btn-close");
 
     // close icon
-    const span = document.createElement("span");
-    span.setAttribute("aria-hidden", true);
-    span.innerHTML = "&times;";
-    
-    closeBtn.appendChild(span);
     div.appendChild(closeBtn);
     return div;
 }
