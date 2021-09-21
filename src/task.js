@@ -1,7 +1,8 @@
 import * as CLASS from './classnames';
 
 const createTask = function(description, id){
-    const task = document.createElement("li");
+    const taskItem = document.createElement("li");
+    taskItem.classList.add("list-group-item");
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add(CLASS.TASK);
@@ -26,13 +27,13 @@ const createTask = function(description, id){
     removeBtn.innerHTML = "&times;";
     removeBtn.classList.add(CLASS.TASK_REMOVE_BUTTON, "btn", "btn-danger", "btn-sm");
     removeBtn.addEventListener("click", () => {
-        task.remove();
+        taskItem.remove();
     })
 
     taskForm.append(taskCheck, taskLabel);
     taskContainer.append(taskForm, removeBtn);
-    task.append(taskContainer);
-    return task;
+    taskItem.append(taskContainer);
+    return taskItem;
 }
 
 export {createTask};

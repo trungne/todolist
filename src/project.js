@@ -33,13 +33,13 @@ const createProject = function(id, description){
     container.classList.add(CLASS.PROJECT_CONTAINER);
     container.id = id;
 
-    const descriptionTag = document.createElement("div");
+    const descriptionTag = document.createElement("h2");
     descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION);
     descriptionTag.textContent = description;
 
     // an order list of tasks
     const project = document.createElement("ol");
-    project.classList.add(CLASS.PROJECT);
+    project.classList.add(CLASS.PROJECT, "list-group");
 
     const controlBox = createProjectControlBox(container.id);
     
@@ -61,9 +61,7 @@ const addBtnHandler = function(event){
         return;
     }
 
-    const taskNum = projectList.childNodes.length;
-    const taskID = `${projectID}-task-${taskNum}`;
-    console.log(taskID);
+    const taskID = `${projectID}-task-${projectList.childNodes.length}`;
     projectList.appendChild(createTask(textField.value, taskID));    
 }
 

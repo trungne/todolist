@@ -6,7 +6,7 @@ import ('./scss/app.scss');
 const { createProject } = require('./project');
 const createHeader = function() {
     const title = document.createElement("div");
-    title.classList.add("header")
+    title.classList.add("header", "text-primary")
 
     const titleText = document.createElement("h1");
     titleText.textContent = "To-do List";
