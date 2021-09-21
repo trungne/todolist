@@ -9,6 +9,11 @@ html {
     align-items: center;
     justify-content: center;
 }
+
+.project-description {
+    text-align: center;
+}
+
 .project-control-box {
     display: flex;
 }
