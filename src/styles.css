@@ -18,8 +18,7 @@ html {
     display: flex;
 }
 .project-container {
-    
-    width: 20vmax;
+    /* width: 50vmax; */
     height: auto;
 }
 

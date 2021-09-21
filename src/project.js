@@ -49,7 +49,8 @@ const createProject = function(id, description){
 }
 
 const addBtnHandler = function(event){
-    const container = document.querySelector("#" + event.target.getAttribute("projectID"));
+    const projectID = event.target.getAttribute("projectID");
+    const container = document.querySelector("#" + projectID);
     const controlBox = container.querySelector("." + CLASS.PROJECT_CONTROL_BOX);
     const textField = container.querySelector("." + CLASS.PROJECT_TEXT_FIELD);
     const projectList = container.querySelector("." + CLASS.PROJECT);
@@ -59,7 +60,11 @@ const addBtnHandler = function(event){
         container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
         return;
     }
-    projectList.appendChild(createTask(textField.value));    
+
+    const taskNum = projectList.childNodes.length;
+    const taskID = `${projectID}-task-${taskNum}`;
+    console.log(taskID);
+    projectList.appendChild(createTask(textField.value, taskID));    
 }
 
 const createWarning = function(message){
