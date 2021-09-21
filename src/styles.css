@@ -1,5 +1,24 @@
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.project-control-box {
+    display: flex;
+}
+.project-container {
+    
+    width: 20vmax;
+    height: auto;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
 }
