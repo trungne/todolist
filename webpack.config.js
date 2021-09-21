@@ -9,6 +9,12 @@ module.exports = {
     new HtmlWebpackPlugin({
         title: "To-do List",
         }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default']
+    }),
     ],
     
   output: {

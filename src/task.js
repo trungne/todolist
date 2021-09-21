@@ -12,7 +12,7 @@ const createTask = function(description, id){
 
     const taskCheck = document.createElement("input");
     taskCheck.classList.add(CLASS.TASK_CHECK, "form-check-input");
-    taskCheck.setAttribute("type", "checkbox");
+    taskCheck.type = "checkbox";
     taskCheck.setAttribute("value", "");
     taskCheck.id = id;
 

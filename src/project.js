@@ -1,18 +1,20 @@
 import * as CLASS from './classnames';
-import 'bootstrap';
 import { createTask } from './task';
 
 const createProjectControlBox = function(containerID){
     // text field and confirm button to add task to project
     const controlBox = document.createElement("form");
-    controlBox.classList.add(CLASS.PROJECT_CONTROL_BOX);
+    controlBox.classList.add(CLASS.PROJECT_CONTROL_BOX, "form-floating");
     controlBox.onsubmit = () => {return false;}
     
-    // text field
+    // input text field
     const form = document.createElement("input");
     form.classList.add(CLASS.PROJECT_TEXT_FIELD, "form-control");
     form.type = "text";
-    form.placeholder = "Enter a task...";
+
+    const label = document.createElement("label");
+    label.textContent = "Enter a task"
+
 
     // add button
     const addBtn = document.createElement("button");
@@ -23,7 +25,7 @@ const createProjectControlBox = function(containerID){
     addBtn.addEventListener("click", addBtnHandler);
     
 
-    controlBox.append(form, addBtn);
+    controlBox.append(form, label, addBtn);
     return controlBox;
 }
 
@@ -32,10 +34,20 @@ const createProject = function(id, description){
     const container = document.createElement("div");
     container.classList.add(CLASS.PROJECT_CONTAINER);
     container.id = id;
+    
 
     const descriptionTag = document.createElement("h2");
     descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION);
     descriptionTag.textContent = description;
+    // descriptionTag.addEventListener("mouseenter", addEditBtn);
+    // descriptionTag.addEventListener("mouseleave", removeEditBtn);
+
+    // tooltip
+    
+    descriptionTag.setAttribute("data-bs-toggle", "tooltip");
+    descriptionTag.setAttribute("data-bs-placement","right");
+    descriptionTag.title = "Click to edit";
+    descriptionTag.setAttribute("contenteditable", true)
 
     // an order list of tasks
     const project = document.createElement("ol");
@@ -48,6 +60,30 @@ const createProject = function(id, description){
     return container;
 }
 
+const createEditBtn = function(){
+    const btn = document.createElement("button");
+    btn.classList.add("btn", "btn-light", "btn-sm");
+    btn.textContent = "Edit";
+    btn.type = "button";
+    return btn;
+}
+
+const addEditBtn = function(event){
+    const container = event.target;
+    const btn = container.querySelector(".btn");
+    if (!btn){
+        container.append(createEditBtn());
+    }
+}
+
+const removeEditBtn = function(event){
+    const container = event.target;
+    const btn = container.querySelector(".btn");
+    if (btn){
+        btn.remove();
+    }
+}
+
 const addBtnHandler = function(event){
     const projectID = event.target.getAttribute("projectID");
     const container = document.querySelector("#" + projectID);
@@ -57,6 +93,7 @@ const addBtnHandler = function(event){
     
     // check empty input
     if (!textField.value){
+        // only add one warning
         if (!container.querySelector(".alert-warning")){
             container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
         }
@@ -74,7 +111,7 @@ const createWarning = function(message){
     div.textContent = message;
     
     const closeBtn = document.createElement("button");
-    closeBtn.setAttribute("type", "button");
+    closeBtn.type = "button";
     closeBtn.setAttribute("data-dismiss", "alert");
     closeBtn.setAttribute("aria-label", "Close");
     closeBtn.setAttribute("data-bs-dismiss", "alert");
