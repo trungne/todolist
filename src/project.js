@@ -1,7 +1,7 @@
 import * as CLASS from './classnames';
 import { createTask } from './task';
 
-const createProjectControlBox = function(containerID){
+const createProjectControlBox = function(){
     // text field and confirm button to add task to project
     const controlBox = document.createElement("form");
     controlBox.classList.add(CLASS.PROJECT_CONTROL_BOX, "form-floating");
@@ -15,47 +15,37 @@ const createProjectControlBox = function(containerID){
     const label = document.createElement("label");
     label.textContent = "Enter a task"
 
-
     // add button
     const addBtn = document.createElement("button");
     addBtn.type = "submit";
     addBtn.classList.add("btn", "btn-primary");
     addBtn.textContent = "Add";
-    addBtn.setAttribute("projectID", containerID);
     addBtn.addEventListener("click", addBtnHandler);
-    
 
     controlBox.append(form, label, addBtn);
     return controlBox;
 }
 
-const createProject = function(id, description){
+const createProject = function(description){
     // a div that wrap controls and project (which wraps a list of tasks)
     const container = document.createElement("div");
     container.classList.add(CLASS.PROJECT_CONTAINER);
-    container.id = id;
     
-
     const descriptionTag = document.createElement("h2");
     descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION);
     descriptionTag.textContent = description;
     // descriptionTag.addEventListener("mouseenter", addEditBtn);
     // descriptionTag.addEventListener("mouseleave", removeEditBtn);
-
-    // tooltip
     
-    descriptionTag.setAttribute("data-bs-toggle", "tooltip");
-    descriptionTag.setAttribute("data-bs-placement","right");
     descriptionTag.title = "Click to edit";
     descriptionTag.setAttribute("contenteditable", true)
 
     // an order list of tasks
-    const project = document.createElement("ol");
-    project.classList.add(CLASS.PROJECT, "list-group");
+    const taskList = document.createElement("ol");
+    taskList.classList.add(CLASS.TASK_LIST, "list-group");
 
     const controlBox = createProjectControlBox(container.id);
-    
-    container.append(descriptionTag, controlBox, project);
+    container.append(descriptionTag, controlBox, taskList);
     
     return container;
 }
@@ -84,12 +74,11 @@ const removeEditBtn = function(event){
     }
 }
 
-const addBtnHandler = function(event){
-    const projectID = event.target.getAttribute("projectID");
-    const container = document.querySelector("#" + projectID);
+const addBtnHandler = function(){
+    const container = document.querySelector("." + CLASS.PROJECT_CONTAINER);
     const controlBox = container.querySelector("." + CLASS.PROJECT_CONTROL_BOX);
     const textField = container.querySelector("." + CLASS.PROJECT_TEXT_FIELD);
-    const projectList = container.querySelector("." + CLASS.PROJECT);
+    const taskList = container.querySelector("." + CLASS.TASK_LIST);
     
     // check empty input
     if (!textField.value){
@@ -99,9 +88,9 @@ const addBtnHandler = function(event){
         }
         return;
     }
-
-    const taskID = `${projectID}-task-${projectList.childNodes.length}`;
-    projectList.appendChild(createTask(textField.value, taskID));    
+    
+    taskList.appendChild(createTask(textField.value));
+    textField.value = "";
 }
 
 const createWarning = function(message){
