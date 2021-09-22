@@ -5,7 +5,7 @@ content.id = "nav-tabContent";
 const createNav = function(tabList){
     const nav = document.createElement("nav");
     const div = document.createElement("div");
-    div.classList.add("nav", "nav-tabs");
+    div.classList.add("nav", "nav-tabs", "justify-content-center");
     div.id = "nav-tab";
     div.setAttribute("role", "tablist");
     for (const tab of tabList){
@@ -41,8 +41,6 @@ const createTabContent = function(tab){
     div.append(tab.content);
     return div;
 }
-
-
 
 export {createNav};
 export {content};

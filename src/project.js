@@ -1,6 +1,60 @@
 import * as CLASS from './classnames';
 import { createTask } from './task';
 
+
+const createProjectMenu = function(){
+    const div = document.createElement("div");
+    div.classList.add(CLASS.PROJET_MENU);
+
+    const p = document.createElement("p");
+    p.classList.add("lead");
+    p.textContent = "A collection of your projects";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add("btn", "btn-primary");
+    button.textContent = "Create new project";
+    button.addEventListener("click", () => {
+        div.append(createNewProject());
+    });
+
+    div.append(p, button);
+    return div;
+}
+
+
+const createNewProject = function(){
+    const div = document.createElement("div");
+    div.classList.add("card");
+
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    const cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
+    cardTitle.textContent = "Project title";
+
+    const cardText = document.createElement("p");
+    cardText.classList.add("card-text");
+    cardText.textContent = "Project description";
+
+    const addBtn = document.createElement("button");
+    addBtn.classList.add("btn", "btn-primary");
+    addBtn.textContent = "Open project";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("btn", "btn-danger");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", () => {
+        div.remove();
+    })
+
+    cardBody.append(cardTitle, cardText, addBtn, deleteBtn);
+    div.append(cardBody);
+    return div;
+}
+
+
 const createProjectControlBox = function(){
     // text field and confirm button to add task to project
     const controlBox = document.createElement("form");
@@ -111,4 +165,4 @@ const createWarning = function(message){
     return div;
 }
 
-export {createProject};
+export {createProjectMenu};

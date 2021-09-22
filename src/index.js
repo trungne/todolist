@@ -1,12 +1,11 @@
 import { content, createNav } from './nav';
 import ('./styles.css');
 import ('./scss/app.scss');
-
 import { Tab } from 'bootstrap';
 
 // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-const { createProject } = require('./project');
+const { createProjectMenu } = require('./project');
 
 const createHome = function(){
     const div = document.createElement("div");
@@ -22,8 +21,8 @@ const createAboutUs = function(){
 
 const initializeHtmlTags = function() {
     const tabList = [
-        {name: "Home", content: createHome(), default: true},
-        {name: "Projects", content: createProject("Test project")},
+        {name: "Home", content: createHome()},
+        {name: "Projects", content: createProjectMenu()},
         {name: "About", content: createAboutUs()}
     ]
 
