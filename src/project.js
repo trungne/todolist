@@ -2,9 +2,14 @@ import * as CLASS from './classnames';
 import { createTask } from './task';
 
 
-const createProjectMenu = function(){
+
+// like an introduction to the menu
+// add more feature in the future
+// ex: how to use...
+const createProjectMenuHeader = function() {
     const div = document.createElement("div");
-    div.classList.add(CLASS.PROJET_MENU);
+    div.classList.add("d-flex", "flex-column", "justify-content-center", "align-items-center");
+    div.style = "margin-bottom: 1em;";
 
     const p = document.createElement("p");
     p.classList.add("lead");
@@ -15,10 +20,29 @@ const createProjectMenu = function(){
     button.classList.add("btn", "btn-primary");
     button.textContent = "Create new project";
     button.addEventListener("click", () => {
-        div.append(createNewProject());
+        const projectList = document.querySelector("#project-list");
+        projectList.append(createNewProject());
     });
 
     div.append(p, button);
+    return div;
+}
+
+// a div that contains all projects
+const createProjectList = function() {
+    const div = document.createElement("div");
+    div.id = "project-list";
+    div.classList.add("d-flex", "flex-row", "flex-wrap");
+    div.style = "gap: 1em";
+    return div;
+}
+
+const createProjectMenu = function(){
+    const div = document.createElement("div");
+    const header = createProjectMenuHeader();
+    const projectList = createProjectList();
+
+    div.append(header, projectList);
     return div;
 }
 
@@ -102,30 +126,6 @@ const createProject = function(description){
     container.append(descriptionTag, controlBox, taskList);
     
     return container;
-}
-
-const createEditBtn = function(){
-    const btn = document.createElement("button");
-    btn.classList.add("btn", "btn-light", "btn-sm");
-    btn.textContent = "Edit";
-    btn.type = "button";
-    return btn;
-}
-
-const addEditBtn = function(event){
-    const container = event.target;
-    const btn = container.querySelector(".btn");
-    if (!btn){
-        container.append(createEditBtn());
-    }
-}
-
-const removeEditBtn = function(event){
-    const container = event.target;
-    const btn = container.querySelector(".btn");
-    if (btn){
-        btn.remove();
-    }
 }
 
 const addBtnHandler = function(){
