@@ -1,13 +1,12 @@
 import * as CLASS from './classnames';
 import { createTask } from './task';
 
-
-
 // like an introduction to the menu
 // add more feature in the future
 // ex: how to use...
 const createProjectMenuHeader = function() {
     const div = document.createElement("div");
+    div.id = "project-menu-header";
     div.classList.add("d-flex", "flex-column", "justify-content-center", "align-items-center");
     div.style = "margin-bottom: 1em;";
 
@@ -20,23 +19,98 @@ const createProjectMenuHeader = function() {
     button.classList.add("btn", "btn-primary");
     button.textContent = "Create new project";
     button.addEventListener("click", () => {
-        const projectList = document.querySelector("#project-list");
-        projectList.append(createNewProject());
+        // only create one input field when clicked
+        if(!document.querySelector("#project-input-field")){
+            div.append(createProjectInput());
+        }
     });
 
     div.append(p, button);
     return div;
 }
 
+const createProjectInput = function(){
+    const div = document.createElement("div");
+    div.id = "project-input-field";
+
+    // project name input field
+    const divName = document.createElement("div");
+    divName.classList.add("mb-3"); // add margin bottom: 3;
+
+    const labelName = document.createElement("label");
+    labelName.setAttribute("for", "project-name-input");
+    labelName.classList.add("form-label");
+    labelName.textContent = "Project name"
+
+    const inputName = document.createElement("input");
+    inputName.id = "project-name-input";
+    inputName.type = "text";
+    inputName.classList.add("form-control");
+
+    divName.append(labelName, inputName);
+
+    // project description input field
+    const divDescription = document.createElement("div");
+    divDescription.classList.add("mb-3"); // add margin bottom: 3;
+
+    const labelDescription = document.createElement("label");
+    labelDescription.classList.add("form-label");
+    labelDescription.setAttribute("for", "project-description-input");
+    labelDescription.textContent = "Project description"
+
+    const inputDescription = document.createElement("textarea");
+    inputDescription.classList.add("form-control");
+    inputDescription.id = "project-description-input";
+    inputDescription.rows = 2;
+
+    divDescription.append(labelDescription, inputDescription);
+
+    const addBtn = document.createElement("button");
+    addBtn.classList.add("btn", "btn-primary");
+    addBtn.textContent = "Add";
+    addBtn.addEventListener("click", () => {
+        const projectMenuHeader = document.querySelector("#project-menu-header");
+        
+        // TODO: only create one warning
+        if (!inputName.value){
+            projectMenuHeader.append(createWarning("Project's name should not be empty!"));
+            return;
+        }
+        else if (!inputDescription.value){
+            projectMenuHeader.append(createWarning("Project's description should not be empty"));
+            return;
+        }
+
+        const projectList = document.querySelector("#project-list");
+        projectList.append(createNewProject(inputName.value, inputDescription.value));
+        div.remove();
+    })
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.classList.add("btn", "btn-light");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.addEventListener("click", () => {
+        div.remove();
+    })
+
+    const buttons = document.createElement("div");
+    buttons.classList.add("d-flex","justify-content-between");
+    buttons.append(addBtn, cancelBtn)
+    div.append(divName, divDescription, buttons);
+    return div;
+}
+
+
 // a div that contains all projects
 const createProjectList = function() {
     const div = document.createElement("div");
     div.id = "project-list";
-    div.classList.add("d-flex", "flex-row", "flex-wrap");
+    div.classList.add("d-flex", "flex-row", "flex-wrap", "justify-content-center", "align-items-center");
     div.style = "gap: 1em";
     return div;
 }
 
+// the main menu that contain ProjectMenuHeader and ProjectList
 const createProjectMenu = function(){
     const div = document.createElement("div");
     const header = createProjectMenuHeader();
@@ -47,24 +121,29 @@ const createProjectMenu = function(){
 }
 
 
-const createNewProject = function(){
+const createNewProject = function(name, description){
     const div = document.createElement("div");
-    div.classList.add("card");
-
+    div.classList.add("card", "w-50");
+    
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
     const cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
-    cardTitle.textContent = "Project title";
+    cardTitle.textContent = name
+    cardTitle.contentEditable = true;
 
     const cardText = document.createElement("p");
     cardText.classList.add("card-text");
-    cardText.textContent = "Project description";
+    cardText.textContent = description
+    cardText.contentEditable = true;
 
-    const addBtn = document.createElement("button");
-    addBtn.classList.add("btn", "btn-primary");
-    addBtn.textContent = "Open project";
+    const cardButtons = document.createElement("div");
+    cardButtons.classList.add("d-flex","justify-content-between");
+
+    const openBtn = document.createElement("button");
+    openBtn.classList.add("btn", "btn-primary");
+    openBtn.textContent = "Open";
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("btn", "btn-danger");
@@ -73,7 +152,9 @@ const createNewProject = function(){
         div.remove();
     })
 
-    cardBody.append(cardTitle, cardText, addBtn, deleteBtn);
+    cardButtons.append(openBtn, deleteBtn)
+
+    cardBody.append(cardTitle, cardText, cardButtons);
     div.append(cardBody);
     return div;
 }

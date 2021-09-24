@@ -1,1 +1,22 @@
+// Include any default variable overrides here (though functions won't be available)
 @import "~bootstrap/scss/bootstrap";
+
+// why doesn't this work???
+$utilities: map-merge(
+  $utilities,
+  (
+    "width": (
+      property: width,
+      class: w,
+      values: (
+        25: 25%,
+        40: 40%,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        auto: auto
+      )
+    ),
+  )
+);
+
