@@ -9,18 +9,6 @@ body {
     height: 100vh;
 }
 
-
-.project-description {
-    text-align: center;
-}
-.project-control-box {
-    display: flex;
-}
-
-.project-container {
-    height: auto;
-}
-
 .task-container {
     display: flex;
     justify-content: space-between;

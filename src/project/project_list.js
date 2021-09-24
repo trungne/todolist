@@ -1,21 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
-import { displayProjectItem } from './project';
-import * as CLASS from '../classnames';
-import { createTask } from '../task';
+import { displayProjectItem, returnToMenu } from './project';
+import { createProjectItem } from './project_item';
 
 // a div that contains all projects
 const createProjectList = function() {
     const div = document.createElement("div");
     div.id = "project-list";
-    div.classList.add("d-flex", "flex-row", "flex-wrap", "justify-content-center", "align-items-center");
-    div.style = "gap: 1em";
+    div.classList.add("d-flex", "flex-column", "flex-wrap", "justify-content-center", "align-items-center", "mb-3");
     return div;
 }
 
-
 const createNewProject = function(name, description){
     const div = document.createElement("div");
-    div.classList.add("card", "w-50");
+    div.classList.add("card", "w-50", "my-3");
     div.id = "project-"+uuidv4();
     
     const cardBody = document.createElement("div");
@@ -58,90 +55,27 @@ const createNewProject = function(name, description){
 
 const openProject = function(id){
     const project = document.querySelector("#" + id);
-    console.log("#" + id);
-    console.log(project);
     if (!project){
         return;
     }
-
+    const backToMenu = document.createElement("button");
+    backToMenu.classList.add("btn", "btn-secondary", "my-3");
+    backToMenu.type = "button";
+    backToMenu.textContent = "Back";
+    backToMenu.addEventListener("click", () => {
+        returnToMenu();
+    })
+    
     const title = project.querySelector(".card-title").textContent;
     const description = project.querySelector(".card-text").textContent;
-    displayProjectItem(createProject(title, description));
+
+    const projectItem = createProjectItem(title, description);
+    
+    const div = document.createElement("div");
+    div.append(backToMenu, projectItem);
+    displayProjectItem(div);
 }
 
 
-const createProjectControlBox = function(){
-    // text field and confirm button to add task to project
-    const controlBox = document.createElement("form");
-    controlBox.classList.add(CLASS.PROJECT_CONTROL_BOX, "form-floating");
-    controlBox.onsubmit = () => {return false;}
-    
-    // input text field
-    const form = document.createElement("input");
-    form.classList.add(CLASS.PROJECT_TEXT_FIELD, "form-control");
-    form.type = "text";
-
-    const label = document.createElement("label");
-    label.textContent = "Enter a task"
-
-    // add button
-    const addBtn = document.createElement("button");
-    addBtn.type = "submit";
-    addBtn.classList.add("btn", "btn-primary");
-    addBtn.textContent = "Add";
-    addBtn.addEventListener("click", addBtnHandler);
-
-    controlBox.append(form, label, addBtn);
-    return controlBox;
-}
-
-const createProject = function(title, description){
-    // a div that wrap controls and project (which wraps a list of tasks)
-    const container = document.createElement("div");
-    container.classList.add(CLASS.PROJECT_CONTAINER);
-
-    const titleTag = document.createElement("h1");
-    titleTag.classList.add("display-1", "text-center");
-    titleTag.textContent = title;
-
-    const descriptionTag = document.createElement("blockquote");
-    descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION, "blockquote");
-    descriptionTag.textContent = description;
-    // descriptionTag.addEventListener("mouseenter", addEditBtn);
-    // descriptionTag.addEventListener("mouseleave", removeEditBtn);
-    
-    // descriptionTag.title = "Click to edit";
-    // descriptionTag.setAttribute("contenteditable", true)
-
-    // an order list of tasks
-    const taskList = document.createElement("ol");
-    taskList.classList.add(CLASS.TASK_LIST, "list-group");
-
-    const controlBox = createProjectControlBox(container.id);
-    container.append(titleTag, descriptionTag, controlBox, taskList);
-    
-    return container;
-}
-
-const addBtnHandler = function(){
-    const container = document.querySelector("." + CLASS.PROJECT_CONTAINER);
-    const controlBox = container.querySelector("." + CLASS.PROJECT_CONTROL_BOX);
-    const textField = container.querySelector("." + CLASS.PROJECT_TEXT_FIELD);
-    const taskList = container.querySelector("." + CLASS.TASK_LIST);
-    
-    // check empty input
-    if (!textField.value){
-        // only add one warning
-        if (!container.querySelector(".alert-warning")){
-            container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
-        }
-        return;
-    }
-    
-    taskList.appendChild(createTask(textField.value));
-
-    // reset text field
-    textField.value = "";
-}
 
 export {createProjectList, createNewProject};

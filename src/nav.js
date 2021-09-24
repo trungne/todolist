@@ -18,9 +18,10 @@ const createNavTabs = function(){
 class NavigationTab {
     static nav = createNavTabs();
     static mainPanel = createPanel();
+
     constructor(name, content){
         this.name = name;
-        this.normalizedName = name.toLowerCase().replaceAll(" ","-");
+        this.normalizedName = name.toLowerCase().replaceAll(/\s/g,"-");
         this.content = content;
     
         const button = this.createTabButton();
@@ -52,7 +53,6 @@ class NavigationTab {
         div.append(this.content);
         return div;
     }
-
 }
 
 export {NavigationTab};

@@ -1,10 +1,10 @@
-import * as CLASS from '../classnames';
 import { createProjectMenuHeader } from './header';
 import { createProjectList } from './project_list';
 
 const menu = document.createElement("div");
 const header = createProjectMenuHeader();
 const projectList = createProjectList();
+
 menu.append(header, projectList);
 // the main menu that contain ProjectMenuHeader and ProjectList
 const createProjectMenu = function(){
@@ -12,15 +12,16 @@ const createProjectMenu = function(){
 }
 
 const displayProjectItem = function(project){
-    const parent = menu.parentNode;
+    const parent =  document.querySelector("#nav-project");
     removeAllChildNodes(parent);
-
     // show project view
     parent.append(project);
 }
 
 const returnToMenu = function(){
-
+    const parent =  document.querySelector("#nav-project");
+    removeAllChildNodes(parent);
+    parent.append(menu);
 }
 
 const removeAllChildNodes = function(parent){
@@ -29,4 +30,4 @@ const removeAllChildNodes = function(parent){
     }
 }
 
-export {createProjectMenu, menu, displayProjectItem};
+export {createProjectMenu, menu, displayProjectItem, returnToMenu};
