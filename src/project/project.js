@@ -40,13 +40,13 @@ const createQuickProject = function(){
     return accordionItem;
 }
 
+const menu = document.createElement("div");
+const header = createProjectMenuHeader();
+const projectList = createProjectList();
+const quickProject = createQuickProject();
+menu.append(quickProject, header, projectList);
 
 const createProjectMenu = function(){
-    const menu = document.createElement("div");
-    const header = createProjectMenuHeader();
-    const projectList = createProjectList();
-    const quickProject = createQuickProject();
-    menu.append(quickProject, header, projectList);
     return menu;
 }
 
