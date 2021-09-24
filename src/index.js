@@ -1,4 +1,4 @@
-import { createNavTabs, createTabButton, createTabPanel } from './nav';
+import { NavigationTab } from './nav';
 import ('./styles.css');
 import ('./scss/app.scss');
 import { Tab } from 'bootstrap';
@@ -8,7 +8,8 @@ import { Tab } from 'bootstrap';
 const { createProjectMenu } = require('./project/project');
 
 const createHome = function(){
-    const div = document.createElement("div");
+    const div = document.createElement("h1");
+    div.classList.add("text-center");
     div.textContent = "Home";
     return div;
 }
@@ -20,41 +21,23 @@ const createAboutUs = function(){
 }
 
 const createMain = function(){
-    const nav = document.createElement("nav");
-    const tabs = createNavTabs();
-
-    const homeButton = createTabButton("Home");
-    const homeTabPanel = createTabPanel("Home", createHome());
-
-    const projectButton = createTabButton("Project");
-    const projectTabPanel = createTabPanel("Project", createProjectMenu());
-
-    const aboutButton = createTabButton("About");
-    const aboutTabPanel = createTabPanel("About", createAboutUs());
-
-    tabs.append(homeButton, projectButton, aboutButton);
-    nav.append(tabs)
-
-    const content = document.createElement("div");
-    content.classList.add("tab-content");
-    content.id = "nav-tabContent";
-
-    content.append(homeTabPanel, projectTabPanel, aboutTabPanel);
-
+    new NavigationTab("Home", createHome());
+    new NavigationTab("Project", createProjectMenu());
+    new NavigationTab("About", createAboutUs());
+    
     const main = document.createElement("main");
-    main.append(nav, content);
+    main.append(NavigationTab.nav, NavigationTab.mainPanel);
     return main;
 }
-const initializeHtmlTags = function() {
 
-    // append all tags in body in main tag
+const initializeHtmlTags = function() {
     const main = createMain();
     document.body.append(main);
 
     let homeTab = document.querySelector('#nav-home-tab')
+    console.log(homeTab);
     let tab = new Tab(homeTab);
     tab.show()
 }
-
 
 initializeHtmlTags();
