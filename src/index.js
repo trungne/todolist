@@ -1,4 +1,4 @@
-import { content, createNav } from './nav';
+import { createNavTabs, createTabButton, createTabPanel } from './nav';
 import ('./styles.css');
 import ('./scss/app.scss');
 import { Tab } from 'bootstrap';
@@ -19,20 +19,37 @@ const createAboutUs = function(){
     return div;
 }
 
-const initializeHtmlTags = function() {
-    const tabList = [
-        {name: "Home", content: createHome()},
-        {name: "Projects", content: createProjectMenu()},
-        {name: "About", content: createAboutUs()}
-    ]
+const createMain = function(){
+    const nav = document.createElement("nav");
+    const tabs = createNavTabs();
 
-    const navBar = createNav(tabList);
-    
-    // append all tags in body in main tag
+    const homeButton = createTabButton("Home");
+    const homeTabPanel = createTabPanel("Home", createHome());
+
+    const projectButton = createTabButton("Project");
+    const projectTabPanel = createTabPanel("Project", createProjectMenu());
+
+    const aboutButton = createTabButton("About");
+    const aboutTabPanel = createTabPanel("About", createAboutUs());
+
+    tabs.append(homeButton, projectButton, aboutButton);
+    nav.append(tabs)
+
+    const content = document.createElement("div");
+    content.classList.add("tab-content");
+    content.id = "nav-tabContent";
+
+    content.append(homeTabPanel, projectTabPanel, aboutTabPanel);
+
     const main = document.createElement("main");
-    main.append(navBar, content);
-    document.body.append(main);
+    main.append(nav, content);
+    return main;
+}
+const initializeHtmlTags = function() {
 
+    // append all tags in body in main tag
+    const main = createMain();
+    document.body.append(main);
 
     let homeTab = document.querySelector('#nav-home-tab')
     let tab = new Tab(homeTab);

@@ -2,20 +2,13 @@ const content = document.createElement("div");
 content.classList.add("tab-content");
 content.id = "nav-tabContent";
 
-const createNav = function(tabList){
-    const nav = document.createElement("nav");
+const createNavTabs = function(){
     const div = document.createElement("div");
     div.classList.add("nav", "nav-tabs", "justify-content-center");
     div.id = "nav-tab";
     div.setAttribute("role", "tablist");
-    for (const tab of tabList){
-        const button = createTabButton(tab.name);
-        div.append(button);
-        content.append(createTabContent(tab));
-    }
-    
-    nav.append(div);
-    return nav;
+
+    return div;
 }
 
 const createTabButton = function(name){
@@ -32,15 +25,16 @@ const createTabButton = function(name){
     return button;
 }
 
-const createTabContent = function(tab){
+const createTabPanel = function(name, element){
     const div = document.createElement("div");
     div.classList.add("tab-pane", "fade");
-    div.id = "nav-" + tab.name.toLowerCase();
+    div.id = "nav-" + name.toLowerCase();
     div.setAttribute("role", "tabpanel");
-    div.setAttribute("aria-labelledby", `nav-${tab.name.toLowerCase()}-tab`);
-    div.append(tab.content);
+    div.setAttribute("aria-labelledby", `nav-${name.toLowerCase()}-tab`);
+
+    div.append(element);
     return div;
 }
 
-export {createNav};
+export {createNavTabs, createTabButton, createTabPanel};
 export {content};

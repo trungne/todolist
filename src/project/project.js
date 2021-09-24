@@ -1,6 +1,4 @@
 import * as CLASS from '../classnames';
-import { createTask } from '../task';
-import { createWarning } from '../utils/utils';
 import { createProjectMenuHeader } from './header';
 import { createProjectList } from './project_list';
 
@@ -14,10 +12,21 @@ const createProjectMenu = function(){
 }
 
 const displayProjectItem = function(project){
-    header.setAttribute("display", "none");
-    projectList.setAttribute("display", "none");
-    menu.append(project);
+    const parent = menu.parentNode;
+    removeAllChildNodes(parent);
+
+    // show project view
+    parent.append(project);
 }
 
+const returnToMenu = function(){
+
+}
+
+const removeAllChildNodes = function(parent){
+    while (parent.firstChild) {
+        parent.firstChild.remove()
+    }
+}
 
 export {createProjectMenu, menu, displayProjectItem};

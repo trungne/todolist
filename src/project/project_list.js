@@ -101,11 +101,11 @@ const createProject = function(title, description){
     container.classList.add(CLASS.PROJECT_CONTAINER);
 
     const titleTag = document.createElement("h1");
-    titleTag.classList.add("display-1");
+    titleTag.classList.add("display-1", "text-center");
     titleTag.textContent = title;
 
-    const descriptionTag = document.createElement("h2");
-    descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION);
+    const descriptionTag = document.createElement("blockquote");
+    descriptionTag.classList.add(CLASS.PROJECT_DESCRIPTION, "blockquote");
     descriptionTag.textContent = description;
     // descriptionTag.addEventListener("mouseenter", addEditBtn);
     // descriptionTag.addEventListener("mouseleave", removeEditBtn);
@@ -139,6 +139,8 @@ const addBtnHandler = function(){
     }
     
     taskList.appendChild(createTask(textField.value));
+
+    // reset text field
     textField.value = "";
 }
 
