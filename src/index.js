@@ -7,16 +7,18 @@ import { createHome } from './home/home';
 
 // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-const createAboutUs = function(){
+const createAboutMe = function(){
     const div = document.createElement("div");
-    div.textContent = "About us";
+    div.classList.add("text-center", "display-3", "d-flex", "justify-content-center", "align-items-center");
+    div.style.height = "100vh";
+    div.textContent = "Created by Trung Nguyen";
     return div;
 }
 
 const createMain = function(){
     new NavigationTab("Home", createHome());
     new NavigationTab("Project", createProjectMenu());
-    new NavigationTab("About Us", createAboutUs());
+    new NavigationTab("About Me", createAboutMe());
     
     const main = document.createElement("main");
     main.append(NavigationTab.nav, NavigationTab.mainPanel);
@@ -28,7 +30,6 @@ const initializeHtmlTags = function() {
     document.body.append(main);
 
     let homeTab = document.querySelector('#nav-home-tab')
-    console.log(homeTab);
     let tab = new Tab(homeTab);
     tab.show();
 }
