@@ -5,7 +5,7 @@ import { Tab } from 'bootstrap';
 
 // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-const { createProjectMenu } = require('./project');
+const { createProjectMenu } = require('./project/project');
 
 const createHome = function(){
     const div = document.createElement("div");
