@@ -7,13 +7,12 @@ import { createNewProject } from "./project_list";
 const createProjectMenuHeader = function() {
     const div = document.createElement("div");
     div.id = "project-menu-header";
-    div.classList.add("d-flex", "flex-column", "justify-content-center", "align-items-center", "mt-3");
-    div.style = "margin-bottom: 1em;";
+    div.classList.add("d-flex", "flex-column", "justify-content-center", "align-items-center", "my-3");
 
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("btn", "btn-primary");
-    button.textContent = "Create new project";
+    button.textContent = "New project";
     button.addEventListener("click", () => {
         // only create one input field when clicked
         if(!document.querySelector("#project-input-field")){
