@@ -17,7 +17,7 @@ const createQuickProject = function(){
 
     const button = document.createElement("button");
     button.type = "button";
-    button.classList.add("accordion-button");
+    button.classList.add("accordion-button", "collapsed");
     button.setAttribute("data-bs-toggle", "collapse");
     button.setAttribute("data-bs-target", "#collapseOne");
     button.setAttribute("aria-expanded", true);
