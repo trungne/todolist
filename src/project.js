@@ -32,6 +32,7 @@ const createProjectMenuHeader = function() {
 const createProjectInput = function(){
     const div = document.createElement("div");
     div.id = "project-input-field";
+    div.classList.add("px-3", "my-3", "border", "w-75");
 
     // project name input field
     const divName = document.createElement("div");
@@ -70,14 +71,23 @@ const createProjectInput = function(){
     addBtn.textContent = "Add";
     addBtn.addEventListener("click", () => {
         const projectMenuHeader = document.querySelector("#project-menu-header");
-        
+        let warningMessage;
         // TODO: only create one warning
         if (!inputName.value){
-            projectMenuHeader.append(createWarning("Project's name should not be empty!"));
-            return;
+            warningMessage = "Project's name should not be empty!";
         }
         else if (!inputDescription.value){
-            projectMenuHeader.append(createWarning("Project's description should not be empty"));
+            warningMessage = "Project's description should not be empty";
+        }
+
+        if (warningMessage){
+            const alert = projectMenuHeader.querySelector(".alert");
+            // remove existing alert
+            if (alert){
+                alert.remove();
+            }
+
+            projectMenuHeader.append(createWarning(warningMessage));
             return;
         }
 
