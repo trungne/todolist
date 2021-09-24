@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { displayProjectItem, returnToMenu } from './project';
 import { createProjectItem } from './project_item';
 
+
 // a div that contains all projects
 const createProjectList = function() {
     const div = document.createElement("div");
