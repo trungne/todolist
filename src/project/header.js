@@ -1,5 +1,5 @@
 import { createWarning } from "../utils/utils";
-import { createNewProject } from "./project_list";
+import { addProjectToProjectList } from "./project";
 
 // like an introduction to the menu
 // add more feature in the future
@@ -65,30 +65,7 @@ const createProjectInput = function(){
     addBtn.classList.add("btn", "btn-primary");
     addBtn.textContent = "Add";
     addBtn.addEventListener("click", () => {
-        let warningMessage;
-        // TODO: only create one warning
-        if (!inputName.value){
-            warningMessage = "Project's name should not be empty!";
-        }
-        else if (!inputDescription.value){
-            warningMessage = "Project's description should not be empty";
-        }
-
-        if (warningMessage){
-            const alert = div.querySelector(".alert");
-            // remove existing alert
-            if (alert){
-                alert.remove();
-            }
-            div.append(createWarning(warningMessage));
-            return;
-        }
-
-        const projectList = document.querySelector("#project-list");
-        projectList.append(createNewProject(inputName.value, inputDescription.value));
-
-        // remove input field after successfully creating a project
-        div.remove();
+        addProject(inputName, inputDescription);
     })
 
     const cancelBtn = document.createElement("button");
@@ -103,6 +80,36 @@ const createProjectInput = function(){
     buttons.append(addBtn, cancelBtn)
     div.append(divName, divDescription, buttons);
     return div;
+}
+
+const addProject = function(){
+    const div = document.querySelector("#project-input-field");
+    const inputName = document.querySelector("#project-name-input");
+    const inputDescription = document.querySelector("#project-description-input");
+
+    let warningMessage;
+    // TODO: only create one warning
+    if (!inputName.value){
+        warningMessage = "Project's name should not be empty!";
+    }
+    else if (!inputDescription.value){
+        warningMessage = "Project's description should not be empty";
+    }
+
+    if (warningMessage){
+        const alert = div.querySelector(".alert");
+        // remove existing alert
+        if (alert){
+            alert.remove();
+        }
+        div.append(createWarning(warningMessage));
+        return;
+    }
+
+    addProjectToProjectList(inputName.value, inputDescription.value)
+
+    // remove input field after successfully creating a project
+    div.remove();
 }
 
 export {createProjectMenuHeader};

@@ -1,7 +1,7 @@
 import { removeAllChildNodes } from '../utils/utils';
 import { createProjectMenuHeader } from './header';
 import { createProjectItem } from './project_item';
-import { createProjectList } from './project_list';
+import { createNewProject, createProjectList } from './project_list';
 
 const quickProjectID = "quick-project";
 
@@ -50,13 +50,12 @@ const createQuickProject = function(){
 }
 
 const menu = document.createElement("div");
+const header = createProjectMenuHeader();
+const projectList = createProjectList();
+const quickProject = createQuickProject();
 
 const createProjectMenu = function(){
-    const header = createProjectMenuHeader();
-    const projectList = createProjectList();
-    const quickProject = createQuickProject();
     menu.append(quickProject, header, projectList);
-
     return menu;
 }
 
@@ -65,7 +64,7 @@ const displayProjectItem = function(project){
 
     // clear content
     removeAllChildNodes(parent);
-    
+
     // show project view
     parent.append(project);
 }
@@ -76,6 +75,11 @@ const returnToMenu = function(){
     parent.append(menu);
 }
 
+const addProjectToProjectList = function(name, description){
+    const project = createNewProject(name, description);
+    projectList.append(project);
+}
 
 
-export {createProjectMenu, displayProjectItem, returnToMenu};
+
+export {createProjectMenu, displayProjectItem, returnToMenu, addProjectToProjectList};
