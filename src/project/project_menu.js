@@ -50,7 +50,6 @@ const createQuickProject = function(){
     // acordion body content
     const accordionBody = document.createElement("div");
     const quickProject = new ProjectItem("", ""); // a project with no title and description
-    console.log(quickProject);
     accordionBody.append(quickProject.html);
     collapse.append(accordionBody);
 
@@ -60,11 +59,12 @@ const createQuickProject = function(){
 }
 
 const menu = document.createElement("div");
-const header = createProjectMenuHeader();
 const projectList = createProjectList();
-const quickProject = createQuickProject();
+const projects = [];
 
 const createProjectMenu = function(){
+    const header = createProjectMenuHeader();
+    const quickProject = createQuickProject();
     menu.append(quickProject, header, projectList);
     return menu;
 }
@@ -87,7 +87,15 @@ const returnToMenu = function(){
 
 const addProjectToProjectList = function(name, description){
     const project = new ProjectItem(name, description);
+    projects.push(project);
     projectList.append(project.overview);
 }
 
-export {createProjectMenu, displayProjectItem, returnToMenu, addProjectToProjectList};
+const deleteProject = function(project){
+    const index = projects.findIndex(p => p.projectTitle === project.projectTitle);
+    if (index !== -1){
+        projects.splice(index, 1);
+    }
+}
+
+export {createProjectMenu, displayProjectItem, returnToMenu, addProjectToProjectList, deleteProject};

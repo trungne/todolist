@@ -1,10 +1,11 @@
 import { createTask } from './task';
 import { createWarning, removeAllWarnings } from '../utils/utils';
-import { displayProjectItem, returnToMenu } from './project_menu';
+import { deleteProject, displayProjectItem, returnToMenu } from './project_menu';
 
 class ProjectItem {
     static containerID = "project-item"
     static taskListID = "project-task-list";
+    static backButton = ProjectItem.createBackButton();
     
     static createTaskList(){
         // an order list of tasks
@@ -31,6 +32,10 @@ class ProjectItem {
         this.taskList = ProjectItem.createTaskList();
         this.overview = this.createOverview();
         this.container = this.createElement();
+    }
+
+    get projectTitle() {
+        return this.title;
     }
 
     get html() {
@@ -132,6 +137,7 @@ class ProjectItem {
         deleteBtn.classList.add("btn", "btn-danger");
         deleteBtn.textContent = "Delete";
         deleteBtn.addEventListener("click", () => {
+            deleteProject(this);
             div.remove();
         })
     
@@ -144,7 +150,7 @@ class ProjectItem {
     
     openProject = function(){
         const div = document.createElement("div");
-        div.append(ProjectItem.createBackButton(), this.container);
+        div.append(ProjectItem.backButton, this.container);
         displayProjectItem(div);
     }
 }
