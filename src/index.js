@@ -1,37 +1,68 @@
-import { NavigationTab } from './nav';
+import {Tab} from 'bootstrap';
+import {MainUi} from "./component/main/main-ui";
+import {ProjectMenuUi} from "./component/project-menu/project-menu-ui";
+import {ProjectDao} from "./dao/project-dao";
+import {HomeController} from "./component/home/home-controller";
+import {MainController} from "./component/main/main-controller";
+import {ProjectFormController} from "./component/project-form/project-form-controller";
+import {ProjectMenuController} from "./component/project-menu/project-menu-controller";
+import {TaskController} from "./component/task/task-controller";
+import {WarningController} from "./component/warning/warning-controller";
+import {AboutMeController} from "./component/about-me/about-me-controller";
+import {HomeUi} from "./component/home/home-ui";
+import {AboutMeUi} from "./component/about-me/about-me-ui";
+
 import ('./styles.css');
 import ('./scss/app.scss');
-import { Tab } from 'bootstrap';
-import { createProjectMenu } from './project/project_menu'
-import { createHome } from './home/home';
 
 // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-const createAboutMe = function(){
-    const div = document.createElement("div");
-    div.classList.add("text-center", "display-3", "d-flex", "justify-content-center", "align-items-center");
-    div.style.height = "100vh";
-    div.textContent = "Created by Trung Nguyen";
-    return div;
+// globally initialize controllers so that every ui can call methods in corresponding controller
+window.aboutMeController = new AboutMeController();
+window.homeController = new HomeController();
+window.mainController = new MainController();
+window.projectFormController = new ProjectFormController();
+window.projectMenuController = new ProjectMenuController();
+window.taskController = new TaskController();
+window.warningController = new WarningController();
+
+main();
+
+function main() {
+    // use window.location.pathname to implement feature redirect page
+    // let page = window.location.pathname;
+
+    let menus = initMenus();
+    document.body.insertAdjacentHTML("afterbegin", new MainUi().init(menus));
+    setTimeout(() => {
+        navigateToTab(menus[0].id);
+    })
 }
 
-const createMain = function(){
-    new NavigationTab("Home", createHome());
-    new NavigationTab("Project", createProjectMenu());
-    new NavigationTab("About Me", createAboutMe());
-    
-    const main = document.createElement("main");
-    main.append(NavigationTab.nav, NavigationTab.mainPanel);
-    return main;
+function initMenus() {
+    let allProjects = new ProjectDao().getAll();
+
+    return [
+        {
+            id: "home", // Should use id, tab.name can be translated to Vietnamese one day (i18n)
+            name: "Home",
+            body: new HomeUi().init()
+        },
+        {
+            id: "project",
+            name: "Project",
+            body: new ProjectMenuUi().init(allProjects)
+        },
+        {
+            id: "aboutMe",
+            name: "About Me",
+            body: new AboutMeUi().init()
+        }
+    ];
 }
 
-const initializeHtmlTags = function() {
-    const main = createMain();
-    document.body.append(main);
-
-    let homeTab = document.querySelector('#nav-home-tab')
-    let tab = new Tab(homeTab);
+function navigateToTab(tabId) {
+    let tabElement = document.getElementById(`nav-${tabId}-tab`);
+    let tab = new Tab(tabElement);
     tab.show();
 }
-
-initializeHtmlTags();
