@@ -1,15 +1,27 @@
 import { removeAllChildNodes } from '../utils/utils';
 import { createProjectMenuHeader } from './header';
 import { ProjectItem } from './project_item';
-
 const quickProjectID = "quick-project";
+const key = "projectsStored" // a key used to store all projects in local storage
+const menu = document.createElement("div");
 
+let projects = []
 // a div that contains all projects
 const createProjectList = function() {
     const div = document.createElement("div");
     div.id = "project-list";
     div.classList.add("d-flex", "flex-column", "flex-wrap", "justify-content-center", "align-items-center", "mb-3");
     return div;
+}
+
+const projectList = createProjectList();
+
+
+const loadProjects = function(list){
+    const storedProjects = JSON.parse(localStorage.getItem(key) || "[]");
+    for (const project of storedProjects){
+        
+    }
 }
 
 
@@ -50,7 +62,7 @@ const createQuickProject = function(){
     // acordion body content
     const accordionBody = document.createElement("div");
     const quickProject = new ProjectItem("", ""); // a project with no title and description
-    accordionBody.append(quickProject.html);
+    accordionBody.insertAdjacentHTML("beforeend", quickProject.html);
     collapse.append(accordionBody);
 
     // append heading and body in accordion item
@@ -58,20 +70,26 @@ const createQuickProject = function(){
     return accordionItem;
 }
 
-const menu = document.createElement("div");
-const projectList = createProjectList();
-const projects = [];
+
 
 const createProjectMenu = function(){
     const header = createProjectMenuHeader();
     const quickProject = createQuickProject();
+
+    loadProjects();
+
+    for(const project of projects){
+        console.log(project);
+        displayProject(project);
+    }
+
     menu.append(quickProject, header, projectList);
     return menu;
 }
 
 const displayProjectItem = function(project){
     const parent =  document.querySelector("#nav-project");
-
+    
     // clear content
     removeAllChildNodes(parent);
 
@@ -87,7 +105,14 @@ const returnToMenu = function(){
 
 const addProjectToProjectList = function(name, description){
     const project = new ProjectItem(name, description);
+
     projects.push(project);
+    localStorage.setItem(key, JSON.stringify(projects));
+
+    displayProject(project);
+}
+
+const displayProject = function(project){
     projectList.append(project.overview);
 }
 
@@ -96,6 +121,9 @@ const deleteProject = function(project){
     if (index !== -1){
         projects.splice(index, 1);
     }
+
+    // update projects
+    localStorage.setItem(key, JSON.stringify(projects));
 }
 
 export {createProjectMenu, displayProjectItem, returnToMenu, addProjectToProjectList, deleteProject};

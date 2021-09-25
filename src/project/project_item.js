@@ -26,6 +26,7 @@ class ProjectItem {
         return backToMenu;
     }
     
+
     constructor(title, description){
         this.title = title;
         this.description = description;
@@ -41,6 +42,7 @@ class ProjectItem {
     get html() {
         return this.container;
     }
+
     createElement(){
         // a div that wrap controls and project (which wraps a list of tasks)
         const div = document.createElement("div");
