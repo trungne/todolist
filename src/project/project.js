@@ -1,20 +1,26 @@
+import { removeAllChildNodes } from '../utils/utils';
 import { createProjectMenuHeader } from './header';
 import { createProjectItem } from './project_item';
 import { createProjectList } from './project_list';
 
 const quickProjectID = "quick-project";
+
 const createQuickProject = function(){
+    // accordion main div
     const div = document.createElement("div");
     div.classList.add("accordion");
     div.id = quickProjectID;
 
+    // accordion item (can have more than 1 but for the quick project, only one is needed)
     const accordionItem = document.createElement("div");
     accordionItem.classList.add("accordion-item");
 
+    // accordion heading
     const accordionHeading = document.createElement("h2");
     accordionHeading.classList.add("accordion-header");
     accordionHeading.id = "heading";
 
+    // accordion button
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("accordion-button", "collapsed");
@@ -26,33 +32,40 @@ const createQuickProject = function(){
 
     accordionHeading.append(button);
 
+    // accordion content
     const collapse = document.createElement("div");
     collapse.id = "collapseOne";
     collapse.classList.add("accordion-collapse", "collapse");
     collapse.setAttribute("aria-labelledby", "headingOne");
     collapse.setAttribute("data-bs-parent", quickProjectID);
 
+    // acordion body content
     const accordionBody = document.createElement("div");
     accordionBody.append(createProjectItem("", ""));
     collapse.append(accordionBody);
 
+    // append heading and body in accordion item
     accordionItem.append(accordionHeading, collapse);
     return accordionItem;
 }
 
 const menu = document.createElement("div");
-const header = createProjectMenuHeader();
-const projectList = createProjectList();
-const quickProject = createQuickProject();
-menu.append(quickProject, header, projectList);
 
 const createProjectMenu = function(){
+    const header = createProjectMenuHeader();
+    const projectList = createProjectList();
+    const quickProject = createQuickProject();
+    menu.append(quickProject, header, projectList);
+
     return menu;
 }
 
 const displayProjectItem = function(project){
     const parent =  document.querySelector("#nav-project");
+
+    // clear content
     removeAllChildNodes(parent);
+    
     // show project view
     parent.append(project);
 }
@@ -63,10 +76,6 @@ const returnToMenu = function(){
     parent.append(menu);
 }
 
-const removeAllChildNodes = function(parent){
-    while (parent.firstChild) {
-        parent.firstChild.remove()
-    }
-}
+
 
 export {createProjectMenu, displayProjectItem, returnToMenu};

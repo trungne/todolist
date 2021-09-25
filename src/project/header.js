@@ -80,13 +80,14 @@ const createProjectInput = function(){
             if (alert){
                 alert.remove();
             }
-
             div.append(createWarning(warningMessage));
             return;
         }
 
         const projectList = document.querySelector("#project-list");
         projectList.append(createNewProject(inputName.value, inputDescription.value));
+
+        // remove input field after successfully creating a project
         div.remove();
     })
 

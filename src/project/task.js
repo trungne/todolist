@@ -1,4 +1,8 @@
-import * as CLASS from './classnames';
+class Task{
+    constructor(description){
+        this.description = description;
+    }
+}
 
 const editText = function(event){
     const task = event.target;
@@ -42,7 +46,7 @@ const createTask = function(description){
     taskItem.classList.add("list-group-item");
 
     const taskContainer = document.createElement("div");
-    taskContainer.classList.add(CLASS.TASK);
+    taskContainer.classList.add("d-flex", "justify-content-between");
 
     const taskForm = document.createElement("div");
     taskForm.classList.add("form-check");
@@ -66,7 +70,7 @@ const createTask = function(description){
 
 const createTaskCheckBox = function(){
     const taskCheck = document.createElement("input");
-    taskCheck.classList.add(CLASS.TASK_CHECK, "form-check-input");
+    taskCheck.classList.add("form-check-input");
     taskCheck.type = "checkbox";
     
     return taskCheck;
@@ -74,7 +78,7 @@ const createTaskCheckBox = function(){
 
 const createTaskLabel = function(description){
     const taskLabel = document.createElement("label");
-    taskLabel.classList.add(CLASS.TASK_DESCRIPTION, "form-check-label");
+    taskLabel.classList.add("form-check-label");
     taskLabel.textContent = description;
     taskLabel.addEventListener("click", editText);
 
@@ -85,7 +89,7 @@ const createRemoveButton = function(){
     const removeBtn = document.createElement("button");
     removeBtn.type = "submit";
     removeBtn.innerHTML = "&times;";
-    removeBtn.classList.add(CLASS.TASK_REMOVE_BUTTON, "btn", "btn-danger", "btn-sm");
+    removeBtn.classList.add("btn", "btn-danger", "btn-sm");
     
     return removeBtn;
 }

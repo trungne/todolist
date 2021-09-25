@@ -16,4 +16,21 @@ const createWarning = function(message){
     return div;
 }
 
-export {createWarning}
+const removeAllWarnings = function(parent){
+    const warnings = parent.querySelectorAll(".alert");
+    if(!warnings){
+        return;
+    }
+
+    for (const warning of warnings){
+        warning.remove();
+    }
+}
+
+const removeAllChildNodes = function(parent){
+    while (parent.firstChild) {
+        parent.firstChild.remove()
+    }
+}
+
+export {createWarning, removeAllWarnings, removeAllChildNodes}

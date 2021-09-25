@@ -1,5 +1,5 @@
-import { createTask } from '../task';
-import { createWarning } from '../utils/utils';
+import { createTask } from './task';
+import { createWarning, removeAllWarnings } from '../utils/utils';
 
 const containerID = "project-item"
 const taskListID = "project-task-list";
@@ -55,7 +55,8 @@ const createProjectControlBox = function(){
         if (!form.value){
             // only add one warning
             if (!container.querySelector(".alert-warning")){
-                container.insertBefore(createWarning("Doing nothing is not quite a task, right?"), controlBox.nextSibling);
+                const warning = createWarning("Doing nothing is not quite a task, right?");
+                container.insertBefore(warning, controlBox.nextSibling);
             }
             return;
         }
@@ -64,6 +65,9 @@ const createProjectControlBox = function(){
 
         // reset text field
         form.value = "";
+
+        // remove warning if there is any
+        removeAllWarnings(container);
     });
 
     controlBox.append(form, label, addBtn);
