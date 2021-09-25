@@ -1,5 +1,5 @@
 import { createWarning } from "../utils/utils";
-import { addProjectToProjectList } from "./project";
+import { addProjectToProjectList } from "./project_menu";
 
 // like an introduction to the menu
 // add more feature in the future

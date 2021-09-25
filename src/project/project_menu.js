@@ -1,9 +1,17 @@
 import { removeAllChildNodes } from '../utils/utils';
 import { createProjectMenuHeader } from './header';
-import { createProjectItem } from './project_item';
-import { createNewProject, createProjectList } from './project_list';
+import { ProjectItem } from './project_item';
 
 const quickProjectID = "quick-project";
+
+// a div that contains all projects
+const createProjectList = function() {
+    const div = document.createElement("div");
+    div.id = "project-list";
+    div.classList.add("d-flex", "flex-column", "flex-wrap", "justify-content-center", "align-items-center", "mb-3");
+    return div;
+}
+
 
 const createQuickProject = function(){
     // accordion main div
@@ -41,7 +49,9 @@ const createQuickProject = function(){
 
     // acordion body content
     const accordionBody = document.createElement("div");
-    accordionBody.append(createProjectItem("", ""));
+    const quickProject = new ProjectItem("", ""); // a project with no title and description
+    console.log(quickProject);
+    accordionBody.append(quickProject.html);
     collapse.append(accordionBody);
 
     // append heading and body in accordion item
@@ -76,10 +86,8 @@ const returnToMenu = function(){
 }
 
 const addProjectToProjectList = function(name, description){
-    const project = createNewProject(name, description);
-    projectList.append(project);
+    const project = new ProjectItem(name, description);
+    projectList.append(project.overview);
 }
-
-
 
 export {createProjectMenu, displayProjectItem, returnToMenu, addProjectToProjectList};

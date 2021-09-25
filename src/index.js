@@ -2,7 +2,7 @@ import { NavigationTab } from './nav';
 import ('./styles.css');
 import ('./scss/app.scss');
 import { Tab } from 'bootstrap';
-import { createProjectMenu } from './project/project'
+import { createProjectMenu } from './project/project_menu'
 import { createHome } from './home/home';
 
 // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
