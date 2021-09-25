@@ -1,5 +1,6 @@
 import {TaskDao} from "../../dao/task-dao";
 
+// TODO haven't refact yet
 export class TaskController {
 
     taskDao = new TaskDao();
